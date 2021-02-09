@@ -13,49 +13,15 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      searchResults = searchByTraits(people);
       break;
       default:
     app(people); // restart app
       break;
-<<<<<<< HEAD
   }
   
-  function traitPrompt(){
-    let traitSearchType = promptFor("Do you know the eye color of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-    let traitSearchResults;
-    switch(traitSearchType){
-      case 'yes':
-        traitSearchResults = traits(people);
-        break;
-      case 'no':
-        break;
-        default:
-        app(people); // restart app
-        break;
-    }
-  }
-  function traits(people){
-    let eyecolor = promptFor("What is the person's eye color?", chars);
-
-    let foundPeople = people.filter(function(person){
-      if(person.eyecolor === eyecolor){
-        return true;
-      }
-      else{
-        return false;
-      }
-    })
-    // TODO: find the person using the name they entered
-    return displayPeople(foundPeople);
-=======
->>>>>>> 34e659d44318c33da525d6c6685e4698d1c51e9b
-  }
+  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
+  mainMenu(searchResults, people);
 }
-  
-
-
-
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -102,116 +68,8 @@ function searchByName(people){
     }
   })
   // TODO: find the person using the name they entered
-  return displayPerson(foundPerson);
+  return foundPerson;
 }
-
-
-
-function traitPrompt(people){
-  let traitSearchResults = people;
-  let traitSearchType = promptFor("Do you want to search by traits? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  switch(traitSearchType){
-    case 'yes':
-      traitSearchResults = traits(people);
-      break;
-    case 'no':
-    app(people); // restart app
-      break;
-  }
-}
-
-
-
-function searchByTraits(people) {
-  let searchCriteria = promptFor("Which trait would you like to search for?  You can search gender, DOB (m/d/yr), height, weight, eye color, or occupation.", chars).toLocaleLowerCase();
-  let traitCriteriaResult;
-  switch (searchCriteria) {
-    case "gender":
-      traitCriteriaResult = searchByGender(people);
-      break;
-      case "dob":
-        traitCriteriaResult = searchByDOB(people);
-        break;
-      searchCriteria;
-    case "height":
-      traitCriteriaResult = searchByHeight(people);
-      break;
-      searchCriteria;
-    case "weight":
-      traitCriteriaResult = searchByWeight(people);
-      break;
-      searchCriteria;
-    case "eye color":
-      traitCriteriaResult = searchByEyeColor(people);
-      break;
-      searchCriteria;
-    case "occupation":
-      traitCriteriaResult = searchByOccupation(people);
-      break;
-    default:
-  }
-  return traitCriteriaResult;
-}
-
-
-
-
-
-
-function searchByDOB(people){
-  let DOBsearchBy = promptFor("What is the person's DOB?", chars);
-  let personFound = people.filter(function(person){
-    if(person.dob == DOBsearchBy){
-      return true;
-    }else{
-      return false;      
-    }
-  });
-  return personFound
-
-}
-
-function searchByGender(people){
-  let genderSearchBy = promptFor("What is the person's gender?", chars);
-  let personFound = people.filter(function(person){
-    if(person.gender == genderSearchBy){
-      return true;
-    }else{
-      return false;
-    }
-  });
-  return personFound
-}
-
-function searchByHeight(people) {
-  let heightSearchBy = promptFor("What is the person's height in inches?", chars);
-  let personFound = people.filter(function(person){
-     if(person.height == heightSearchBy){
-       return true;
-     }else{
-      return false;
-    }      
-   });
-   return personFound
-}
-
-
-function searchByEyeColor(people){
-  let eyecolor = promptFor("What is the person's eye color?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.eyecolor === eyecolor){
-      return true;
-    }
-    else{
-      return false;
-    }
-  });
-  return personFound
-}  
-
-
-
-
 
 // alerts a list of people
 function displayPeople(people){
@@ -240,11 +98,6 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
-}
-
-// helper function to pass in as default promptFor validation
-function chars(input){
-  return true; // default validation only
 }
 
 // helper function to pass in as default promptFor validation
