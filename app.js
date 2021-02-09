@@ -34,10 +34,10 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+      displayPerson(person) // get person info
     break;
     case "family":
-    // TODO: get person's family
+      getPersonParents(person) // get person parents - this function calls people originally
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -64,7 +64,6 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person using the name they entered
   return displayPerson(foundPerson);
 }
 
@@ -194,16 +193,18 @@ function searchForPersonParents(personParentsArray){
   
    
 }
-function searchByParentId(identification, people)
-let descendants;
-descendants = people.filter(function(element){
- if (element.parents[0] === identification || element.parents[1] === identification){
-     return true;
- }
- else {
-     return false;
- }
-});
+function searchByParentId(identification, people){
+ let descendants;
+ descendants = people.filter(function(element){
+  if (element.parents[0] === identification || element.parents[1] === identification){
+    return true;
+  }
+  else{
+    return false;
+  }
+  });
+  return displayPeople(descendants)
+}  
 
 
 
@@ -220,9 +221,15 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display
+  let personInfo = "First Name: " + person.firstName + "\n"
+                  + "Last Name: " + person.lastName + "\n"
+                  + "Date of Birth:" + person.dob + "\n"
+                  + "Gender: " + person.gender + "\n"
+                  + "Height: " + person.height + "\n"
+                  + "Weight: " + person.weight + "\n"
+                  + "Eye Color: " + person.eyecolor + "\n"
+                  + "Occupation: " + person.occupation + "\n";
+
   alert(personInfo);
 }
 
