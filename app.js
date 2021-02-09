@@ -13,7 +13,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      searchResults = searchByTraits(people);
+      searchResults = traitPrompt(people);
       break;
       default:
     app(people); // restart app
@@ -30,11 +30,12 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    displayPerson(person);
     break;
     case "family":
     // TODO: get person's family
@@ -68,54 +69,67 @@ function searchByName(people){
   return displayPerson(foundPerson);
 }
 
-
+// function traitPrompt(people){
+//   let traitSearchType = promptFor("Do you want to search by traits? Enter 'yes' or 'no'", yesNo).toLowerCase();
+//   switch(traitSearchType){
+//     case 'yes':
+//       traits(people);
+//       break;
+//     case 'no':
+//     app(people); // restart app
+//       break;
+//   }
+// }
 
 function traitPrompt(people){
-  let traitSearchType = promptFor("Do you want to search by traits? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  switch(traitSearchType){
-    case 'yes':
-      traits(people);
-      break;
-    case 'no':
-    app(people); // restart app
-      break;
-  }
+  let traitSearchResults = people;
+  do{
+    traitSearchResults = searchByTraits(traitSearchResults);
+    var response = promptFor("Do you want to search by any other traits? 'yes' or 'no'", yesNo).toLowerCase();    
+  }while(response == "yes");
+return traitSearchResults;
 }
 
 
-
 function searchByTraits(people) {
-  let searchCriteria = promptFor("Which trait would you like to search for?  You can search gender, DOB (m/d/yr), height, weight, eye color, or occupation.", chars).toLocaleLowerCase();
+  let searchCriteria = promptFor("Which trait would you like to search for?  You can search 'gender', 'DOB' (m/d/yr), 'height', 'weight', 'eye color', or 'occupation'.", chars).toLocaleLowerCase();
+  let traitSearchResults;
   switch (searchCriteria) {
     case "gender":
-      searchByGender(people);
+      traitSearchResults = searchByGender(people);
       break;
-      case "dob":
-        searchByDOB(people);
+    case "dob":
+      traitSearchResults = searchByDOB(people);
         break;
     case "height":
-      searchByHeight(people);
+      traitSearchResults = searchByHeight(people);
       break;
     case "weight":
-      searchByWeight(people);
+      traitSearchResults = searchByWeight(people);
       break;
     case "eye color":
-      searchByEyeColor(people);
+      traitSearchResults = searchByEyeColor(people);
       break;
     case "occupation": 
-      searchByOccupation(people);
+    traitSearchResults = searchByOccupation(people);
       break;
     default:
       alert("Could not find anyone by "+ searchCriteria + ".");
       return searchByTraits(people); // restart trait search
   }
 }
-
-
-
-
-
-
+function askIfWantToSearchAgain(personFound){
+  let searchType = promptFor("Do you want to search another trait? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  switch(searchType){
+    case 'yes':
+      traitPrompt(personFound)
+      break;
+    case 'no':
+      // TODO: search by traits
+      //searchResults = traitPrompt(people);
+      break;
+}
+}
 function searchByDOB(people){
   let DOBsearchBy = promptFor("What is the person's DOB?", chars);
   let personFound = people.filter(function(person){
@@ -125,8 +139,14 @@ function searchByDOB(people){
       return false;      
     }
   });
-  return displayPeople(personFound)
-
+  const total = collect(personFound);
+  const persontotal = total.count();
+  if(persontotal > 1){
+    askIfWantToSearchAgain(personFound);
+  }
+  else{
+    displayPeople(personFound);
+  }
 }
 
 function searchByGender(people){
@@ -138,7 +158,7 @@ function searchByGender(people){
       return false;
     }
   });
-  return displayPeople(personFound)
+  return traitPrompt(personFound)
 }
 
 function searchByHeight(people) {
@@ -150,13 +170,12 @@ function searchByHeight(people) {
       return false;
     }      
    });
-   return displayPeople(personFound)
+   return traitPrompt(personFound)
 }
-
 
 function searchByEyeColor(people){
   let eyecolor = promptFor("What is the person's eye color?", chars);
-  let foundPerson = people.filter(function(person){
+  let personFound = people.filter(function(person){
     if(person.eyecolor === eyecolor){
       return true;
     }
@@ -164,46 +183,45 @@ function searchByEyeColor(people){
       return false;
     }
   });
-  return displayPeople(personFound)
+  return traitPrompt(personFound)
 }  
  
+// function getPersonParents(people){
+//   let zero = 0;
+//   let one = 1;
+//   let parentsName = "";
+//   let personWithParents = [];
+//   let personParentsArray = people.parents;
+//   if (personParentsArray.length !==zero){
+//     searchForPersonParents(personParentsArray);
+//     parentsName = getNames(personWithParents);
+//   }else{
+//     parentsName = "This person does not have any parents";
+//   }
+//   return parentsName;
+// }
 
-function getPersonParents(people){
-  let zero = 0;
-  let one = 1;
-  let parentsName = "";
-  let personWithParents = [];
-  let personParentsArray = people.parents;
-  if (personParentsArray.length !==zero){
-    searchForPersonParents(personParentsArray);
-    parentsName = getNames(personWithParents);
-  }else{
-    parentsName = "This person does not have any parents";
-  }
-  return parentsName;
-}
-
-function searchForPersonParents(personParentsArray){
-  let zero = 0;
-  let one = 1;
-    if(personParentsArray.parents.includes(person.id)){ 
-      return displayPerson(personParentsArray.id);
-   } else{
-     return app(people);
-   }
+// function searchForPersonParents(personParentsArray){
+//   let zero = 0;
+//   let one = 1;
+//     if(personParentsArray.parents.includes(person.id)){ 
+//       return displayPerson(personParentsArray.id);
+//    } else{
+//      return app(people);
+//    }
   
    
-}
-function searchByParentId(identification, people)
-let descendants;
-descendants = people.filter(function(element){
- if (element.parents[0] === identification || element.parents[1] === identification){
-     return true;
- }
- else {
-     return false;
- }
-});
+// }
+// function searchByParentId(identification, people)
+// let descendants;
+// descendants = people.filter(function(element){
+//  if (element.parents[0] === identification || element.parents[1] === identification){
+//      return true;
+//  }
+//  else {
+//      return false;
+//  }
+// });
 
 
 
