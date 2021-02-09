@@ -20,6 +20,7 @@ function app(people){
       break;
   }
   
+  
   function traitPrompt(){
     let traitSearchType = promptFor("Do you know the eye color of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
     let traitSearchResults;
@@ -205,6 +206,45 @@ function searchByEyeColor(people){
   });
   return personFound
 }  
+ 
+
+function getPersonParents(people){
+  let zero = 0;
+  let one = 1;
+  let parentsName = "";
+  let personWithParents = [];
+  let personParentsArray = people.parents;
+  if (personParentsArray.length !==zero){
+    searchForPersonParents(personParentsArray);
+    parentsName = getNames(personWithParents);
+  }else{
+    parentsName = "This person does not have any parents";
+  }
+  return parentsName;
+}
+
+function searchForPersonParents(personParentsArray){
+  let zero = 0;
+  let one = 1;
+    if(personParentsArray.parents.includes(person.id)){ 
+      return displayPerson(personParentsArray.id);
+   } else{
+     return app(people);
+   }
+  
+   
+}
+function searchByParentId(identification, people)
+let descendants;
+descendants = people.filter(function(element){
+ if (element.parents[0] === identification || element.parents[1] === identification){
+     return true;
+ }
+ else {
+     return false;
+ }
+});
+
 
 
 
