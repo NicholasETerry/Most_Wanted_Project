@@ -2,7 +2,7 @@
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
-
+//Test
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -19,7 +19,46 @@ function app(people){
     app(people); // restart app
       break;
   }
+<<<<<<< HEAD
 }// move bracket to include mainMenu once we have finished logic for other functions
+=======
+  
+  
+  function traitPrompt(){
+    let traitSearchType = promptFor("Do you know the eye color of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+    let traitSearchResults;
+    switch(traitSearchType){
+      case 'yes':
+        traitSearchResults = traits(people);
+        break;
+      case 'no':
+        break;
+        default:
+        app(people); // restart app
+        break;
+    }
+  }
+  function traits(people){
+    let eyecolor = promptFor("What is the person's eye color?", chars);
+
+    let foundPeople = people.filter(function(person){
+      if(person.eyecolor === eyecolor){
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+    // TODO: find the person using the name they entered
+    return displayPeople(foundPeople);
+  }
+}
+  
+
+
+
+
+>>>>>>> 2779eb14d97cde4081d269b67ecfb3f9fb76e326
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
@@ -166,6 +205,45 @@ function searchByEyeColor(people){
   });
   return displayPeople(personFound)
 }  
+ 
+
+function getPersonParents(people){
+  let zero = 0;
+  let one = 1;
+  let parentsName = "";
+  let personWithParents = [];
+  let personParentsArray = people.parents;
+  if (personParentsArray.length !==zero){
+    searchForPersonParents(personParentsArray);
+    parentsName = getNames(personWithParents);
+  }else{
+    parentsName = "This person does not have any parents";
+  }
+  return parentsName;
+}
+
+function searchForPersonParents(personParentsArray){
+  let zero = 0;
+  let one = 1;
+    if(personParentsArray.parents.includes(person.id)){ 
+      return displayPerson(personParentsArray.id);
+   } else{
+     return app(people);
+   }
+  
+   
+}
+function searchByParentId(identification, people)
+let descendants;
+descendants = people.filter(function(element){
+ if (element.parents[0] === identification || element.parents[1] === identification){
+     return true;
+ }
+ else {
+     return false;
+ }
+});
+
 
 
 
