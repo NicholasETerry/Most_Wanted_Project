@@ -17,7 +17,7 @@ function app(people){ // people is data.js complete
       default:
     app(people); // restart app
       break;
-    }
+  }
   
   function traitPrompt(){
     let traitSearchType = promptFor("Do you know the eye color of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -36,7 +36,7 @@ function app(people){ // people is data.js complete
   function traits(people){
     let eyecolor = promptFor("What is the person's eye color?", chars);
 
-    let foundPerson = people.filter(function(person){
+    let foundPeople = people.filter(function(person){
       if(person.eyecolor === eyecolor){
         return true;
       }
@@ -45,7 +45,7 @@ function app(people){ // people is data.js complete
       }
     })
     // TODO: find the person using the name they entered
-    return foundPerson;
+    return displayPeople(foundPeople);
   }
 }
 // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
@@ -97,7 +97,7 @@ function searchByName(people){
     }
   })
   // TODO: find the person using the name they entered
-  return foundPerson;
+  return displayPerson(foundPerson);
 }
 
 // alerts a list of people
