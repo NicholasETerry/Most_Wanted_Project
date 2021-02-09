@@ -34,13 +34,17 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
+      getPersonInfo(person, people);
     // TODO: get person's info
     displayPerson(person);
     break;
     case "family":
+      getPersonFamily(person, people);
     // TODO: get person's family
     break;
     case "descendants":
+      getDescendants(person, people);
+      mainMenu(person, people);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -185,6 +189,32 @@ function searchByEyeColor(people){
   });
   return traitPrompt(personFound)
 }  
+function searchByWeight(people){
+  let weight = promptFor("What is the person's weight?", chars);
+  let foundPerson = people.filter(function(person){
+    if (person.weight === weight){
+       return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return displayPeople(personFound)
+}
+function searchByOccupation(people){
+  let occupation = promptFor("What is the person's occupation?", chars);
+  let foundPerson = people.filter(function(person){
+    if (person.occupation === occupation){
+      return true;
+    }
+    else{
+      return false
+    }
+
+  
+  });
+  return displayPeople(personFound)
+}
  
 // function getPersonParents(people){
 //   let zero = 0;
@@ -211,17 +241,26 @@ function searchByEyeColor(people){
 //    }
   
    
-// }
-// function searchByParentId(identification, people)
-// let descendants;
-// descendants = people.filter(function(element){
-//  if (element.parents[0] === identification || element.parents[1] === identification){
-//      return true;
-//  }
-//  else {
-//      return false;
-//  }
-// });
+//}
+function searchByParentId(identification, people)
+let descendants;
+descendants = people.filter(function(element){
+ if (element.parents[0] === identification || element.parents[1] === identification){
+     return true;
+ }
+ else {
+     return false;
+ }
+});
+function getDecendants(person, people)
+let descendants;
+let identification;
+identification = person.id;
+descendants = [];
+descendants = searchByParentId(indentification, people)
+console.log(descendants)
+return descendants;
+
 
 
 
