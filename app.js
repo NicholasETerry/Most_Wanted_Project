@@ -19,41 +19,7 @@ function app(people){
     app(people); // restart app
       break;
   }
-  
-  function traitPrompt(){
-    let traitSearchType = promptFor("Do you know the eye color of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-    let traitSearchResults;
-    switch(traitSearchType){
-      case 'yes':
-        traitSearchResults = traits(people);
-        break;
-      case 'no':
-        break;
-        default:
-        app(people); // restart app
-        break;
-    }
-  }
-  function traits(people){
-    let eyecolor = promptFor("What is the person's eye color?", chars);
-
-    let foundPeople = people.filter(function(person){
-      if(person.eyecolor === eyecolor){
-        return true;
-      }
-      else{
-        return false;
-      }
-    })
-    // TODO: find the person using the name they entered
-    return displayPeople(foundPeople);
-  }
-}
-  
-
-
-
-
+}// move bracket to include mainMenu once we have finished logic for other functions
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
@@ -105,11 +71,10 @@ function searchByName(people){
 
 
 function traitPrompt(people){
-  let traitSearchResults = people;
   let traitSearchType = promptFor("Do you want to search by traits? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(traitSearchType){
     case 'yes':
-      traitSearchResults = traits(people);
+      traits(people);
       break;
     case 'no':
     app(people); // restart app
@@ -121,33 +86,29 @@ function traitPrompt(people){
 
 function searchByTraits(people) {
   let searchCriteria = promptFor("Which trait would you like to search for?  You can search gender, DOB (m/d/yr), height, weight, eye color, or occupation.", chars).toLocaleLowerCase();
-  let traitCriteriaResult;
   switch (searchCriteria) {
     case "gender":
-      traitCriteriaResult = searchByGender(people);
+      searchByGender(people);
       break;
       case "dob":
-        traitCriteriaResult = searchByDOB(people);
+        searchByDOB(people);
         break;
-      searchCriteria;
     case "height":
-      traitCriteriaResult = searchByHeight(people);
+      searchByHeight(people);
       break;
-      searchCriteria;
     case "weight":
-      traitCriteriaResult = searchByWeight(people);
+      searchByWeight(people);
       break;
-      searchCriteria;
     case "eye color":
-      traitCriteriaResult = searchByEyeColor(people);
+      searchByEyeColor(people);
       break;
-      searchCriteria;
-    case "occupation":
-      traitCriteriaResult = searchByOccupation(people);
+    case "occupation": 
+      searchByOccupation(people);
       break;
     default:
+      alert("Could not find anyone by "+ searchCriteria + ".");
+      return searchByTraits(people); // restart trait search
   }
-  return traitCriteriaResult;
 }
 
 
@@ -164,7 +125,7 @@ function searchByDOB(people){
       return false;      
     }
   });
-  return personFound
+  return displayPeople(personFound)
 
 }
 
@@ -177,7 +138,7 @@ function searchByGender(people){
       return false;
     }
   });
-  return personFound
+  return displayPeople(personFound)
 }
 
 function searchByHeight(people) {
@@ -189,7 +150,7 @@ function searchByHeight(people) {
       return false;
     }      
    });
-   return personFound
+   return displayPeople(personFound)
 }
 
 
@@ -203,7 +164,7 @@ function searchByEyeColor(people){
       return false;
     }
   });
-  return personFound
+  return displayPeople(personFound)
 }  
 
 
