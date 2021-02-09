@@ -19,46 +19,7 @@ function app(people){
     app(people); // restart app
       break;
   }
-<<<<<<< HEAD
 }// move bracket to include mainMenu once we have finished logic for other functions
-=======
-  
-  
-  function traitPrompt(){
-    let traitSearchType = promptFor("Do you know the eye color of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-    let traitSearchResults;
-    switch(traitSearchType){
-      case 'yes':
-        traitSearchResults = traits(people);
-        break;
-      case 'no':
-        break;
-        default:
-        app(people); // restart app
-        break;
-    }
-  }
-  function traits(people){
-    let eyecolor = promptFor("What is the person's eye color?", chars);
-
-    let foundPeople = people.filter(function(person){
-      if(person.eyecolor === eyecolor){
-        return true;
-      }
-      else{
-        return false;
-      }
-    })
-    // TODO: find the person using the name they entered
-    return displayPeople(foundPeople);
-  }
-}
-  
-
-
-
-
->>>>>>> 2779eb14d97cde4081d269b67ecfb3f9fb76e326
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
