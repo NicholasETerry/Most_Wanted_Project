@@ -66,6 +66,7 @@ function searchByName(people){
       return false;
     }
   })
+  // TODO: find the person using the name they entered
   return displayPerson(foundPerson);
 }
 
@@ -84,7 +85,7 @@ function searchByName(people){
 function traitPrompt(people){
   let traitSearchResults = people;
   do{
-    traitSearchResults = searchByTraits(traitSearchResults);
+    traitSearchResults = searchByTraits(people);
     var response = promptFor("Do you want to search by any other traits? 'yes' or 'no'", yesNo).toLowerCase();    
   }while(response == "yes");
 return traitSearchResults;
@@ -93,7 +94,7 @@ return traitSearchResults;
 
 function searchByTraits(people) {
   let searchCriteria = promptFor("Which trait would you like to search for?  You can search 'gender', 'DOB' (m/d/yr), 'height', 'weight', 'eye color', or 'occupation'.", chars).toLocaleLowerCase();
-  let traitSearchResults;
+  //let traitSearchResults;
   switch (searchCriteria) {
     case "gender":
       traitSearchResults = searchByGender(people);
@@ -114,24 +115,24 @@ function searchByTraits(people) {
     traitSearchResults = searchByOccupation(people);
       break;
     default:
-      alert("Could not find anyone by "+ searchCriteria + ".");
+      alert("Not a valid input.");
       return searchByTraits(people); // restart trait search
   }
 }
-function askIfWantToSearchAgain(personFound){
-  let searchType = promptFor("Do you want to search another trait? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  switch(searchType){
-    case 'yes':
-      traitPrompt(personFound)
-      break;
-    case 'no':
-      // TODO: search by traits
-      //searchResults = traitPrompt(people);
-      break;
-}
-}
+// function askIfWantToSearchAgain(personFound){
+//   let searchType = promptFor("Do you want to search another trait? Enter 'yes' or 'no'", yesNo).toLowerCase();
+//   switch(searchType){
+//     case 'yes':
+//       traitPrompt(personFound)
+//       break;
+//     case 'no':
+//       // TODO: search by traits
+//       //searchResults = traitPrompt(people);
+//       break;
+// }
+// }
 function searchByDOB(people){
-  let DOBsearchBy = promptFor("What is the person's DOB?", chars);
+  let DOBsearchBy = promptFor("What is the person's DOB? (m/d/yr)", chars);
   let personFound = people.filter(function(person){
     if(person.dob == DOBsearchBy){
       return true;
@@ -139,14 +140,15 @@ function searchByDOB(people){
       return false;      
     }
   });
-  const total = collect(personFound);
-  const persontotal = total.count();
-  if(persontotal > 1){
-    askIfWantToSearchAgain(personFound);
-  }
-  else{
-    displayPeople(personFound);
-  }
+  // const total = collect(personFound);
+  // const persontotal = total.count();
+  // if(persontotal > 1){
+  //   askIfWantToSearchAgain(personFound);
+  // }
+  // else{
+
+     displayPeople(personFound);
+  // }
 }
 
 function searchByGender(people){
@@ -158,37 +160,36 @@ function searchByGender(people){
       return false;
     }
   });
-  return traitPrompt(personFound)
+  return displayPeople(personFound)
 }
-
-function searchByHeight(people) {
-  let heightSearchBy = promptFor("What is the person's height in inches?", chars);
+function searchByHeight(people){
+  let heightSearchBy = promptFor("What is the person's height?", chars);
   let personFound = people.filter(function(person){
-     if(person.height == heightSearchBy){
-       return true;
-     }else{
-      return false;
-    }      
-   });
-   return traitPrompt(personFound)
-}
-
-function searchByEyeColor(people){
-  let eyecolor = promptFor("What is the person's eye color?", chars);
-  let personFound = people.filter(function(person){
-    if(person.eyecolor === eyecolor){
+    if(person.height == heightSearchBy){
       return true;
-    }
-    else{
+    }else{
       return false;
     }
   });
-  return traitPrompt(personFound)
-}  
+  return displayPeople(personFound)
+}
+
+function searchByEyeColor(people){
+  let eyeColorSearchBy = promptFor("What is the person's eye color?", chars);
+  let personFound = people.filter(function(person){
+    if(person.eyecolor == eyeColorSearchBy){
+      return true;
+    }else{
+      return false;
+    }
+  });
+  return displayPeople(personFound)
+}
+
 function searchByWeight(people){
-  let weight = promptFor("What is the person's weight?", chars);
-  let foundPerson = people.filter(function(person){
-    if (person.weight === weight){
+  let weightSearchBy = promptFor("What is the person's weight?", chars);
+  let personFound = people.filter(function(person){
+    if (person.weight == weightSearchBy){
        return true;
     }
     else{
@@ -199,15 +200,13 @@ function searchByWeight(people){
 }
 function searchByOccupation(people){
   let occupation = promptFor("What is the person's occupation?", chars);
-  let foundPerson = people.filter(function(person){
-    if (person.occupation === occupation){
+  let personFound = people.filter(function(person){
+    if (person.occupation == occupation){
       return true;
     }
     else{
       return false
     }
-
-  
   });
   return displayPeople(personFound)
 }
@@ -238,24 +237,25 @@ function searchByOccupation(people){
   
    
 //}
-function searchByParentId(identification, people)
-let descendants;
-descendants = people.filter(function(element){
- if (element.parents[0] === identification || element.parents[1] === identification){
-     return true;
- }
- else {
-     return false;
- }
-});
-function getDecendants(person, people)
-let descendants;
-let identification;
-identification = person.id;
-descendants = [];
-descendants = searchByParentId(indentification, people)
-console.log(descendants)
-return descendants;
+
+// function searchByParentId(identification, people)
+// let descendants;
+// descendants = people.filter(function(element){
+//  if (element.parents[0] === identification || element.parents[1] === identification){
+//      return true;
+//  }
+//  else {
+//      return false;
+//  }
+// });
+// function getDecendants(person, people)
+// let descendants;
+// let identification;
+// identification = person.id;
+// descendants = [];
+// descendants = searchByParentId(indentification, people)
+// console.log(descendants)
+// return descendants;
 
 
 
