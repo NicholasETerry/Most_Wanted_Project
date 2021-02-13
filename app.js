@@ -83,9 +83,9 @@ function searchByName(people){
 // }
 
 function traitPrompt(people){
-  let traitSearchResults = people;
+  //let traitSearchResults = people;
   do{
-    traitSearchResults = searchByTraits(people);
+    let traitSearchResults = searchByTraits(people);
     var response = promptFor("Do you want to search by any other traits? 'yes' or 'no'", yesNo).toLowerCase();    
   }while(response == "yes");
 return traitSearchResults;
@@ -94,7 +94,7 @@ return traitSearchResults;
 
 function searchByTraits(people) {
   let searchCriteria = promptFor("Which trait would you like to search for?  You can search 'gender', 'DOB' (m/d/yr), 'height', 'weight', 'eye color', or 'occupation'.", chars).toLocaleLowerCase();
-  //let traitSearchResults;
+  let traitSearchResults;
   switch (searchCriteria) {
     case "gender":
       traitSearchResults = searchByGender(people);
